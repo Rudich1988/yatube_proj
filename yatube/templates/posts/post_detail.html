@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+      <aside class="col-12 col-md-3">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            Дата публикации: {{ object.pub_date|date:'d M Y' }}
+          </li>
+          {% if object.group %}              
+          <li class="list-group-item">
+            Группа: {{ object.group.title }}<br>
+            <a href="{% url 'posts:group_posts' object.group.slug %}">
+              все записи группы
+            </a>
+          </li>
+          {% endif %}            
+          <li class="list-group-item">
+            Автор: {{ object.author.get_full_name }}
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Всего постов автора:  <span >{{ len }}</span>
+          </li>
+          {% if len > 1 %}
+          <li class="list-group-item">
+            <a href="{% url 'posts:profile' object.author.id %}">
+              все посты пользователя
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </aside>
+      <article class="col-12 col-md-9">
+        <p>
+          {{ object.text|truncatewords:30 }}
+        </p>
+         <!-- эта кнопка видна только автору -->
+        {% if user == object.author %}
+        <a class="btn btn-primary" href="{% url 'posts:post_update' object.id %}">
+          редактировать запись
+        </a><br><br>
+        <a class="btn btn-primary" href="{% url 'posts:post_delete' object.id %}">
+          удалить запись
+        </a>
+        {% endif %}               
+      </article>
+    </div>     
+  </div>
+{% endblock %}

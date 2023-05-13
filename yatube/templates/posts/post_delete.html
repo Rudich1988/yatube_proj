@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container py-5"> 
+    <div class="row justify-content-center">
+      <div class="col-md-8 p-5">
+        <div class="card">
+          <div class="card-header">
+            
+          </div>
+          <div class="card-body">
+           <form method="post">
+            {% csrf_token %}
+             <p>Вы действительно хотите удалить пост "{{ object.text|truncatewords:30 }}"?</p>
+             {{ form }}
+             <input class="btn btn-primary" type="submit" value="Удалить">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
