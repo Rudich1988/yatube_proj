@@ -1,8 +1,11 @@
+from typing import Any, Dict
+from django.db.models.query import QuerySet
 from common.views import TitleMixin
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
+from django.db.models import Q
 
 from .forms import PostForm
 from .models import Group, Post
@@ -33,6 +36,34 @@ class PostListView(ListView):
         slug = self.kwargs.get('slug')
         context['title'] = f'Посты группы {slug}'
         return context
+    
+
+class PostSearchView(ListView):
+    paginate_by = 5
+    model = Post
+    template_name = 'posts/group_list.html'
+
+    def get_queryset(self):
+        queryset = super(PostSearchView, self).get_queryset()
+        search_query = self.request.GET.get('search', '')       
+        if search_query:
+            try:
+                group_id = Group.objects.get(title=search_query).id
+            except(TypeError, ValueError, OverflowError, Group.DoesNotExist):
+                group_id = None
+            if group_id == None:
+                return queryset.filter(text__icontains=search_query)
+            else:
+                return queryset.filter(Q(text__icontains=search_query) | Q(group=group_id))
+        else:
+            return queryset
+    
+    def get_context_data(self):
+        search_query = self.request.GET.get('search', '')
+        context = super(PostSearchView, self).get_context_data()
+        context['title'] = f'Результаты поиска по запросу "{search_query}"'
+        return context
+
     
 
 class ProfileListView(ListView):

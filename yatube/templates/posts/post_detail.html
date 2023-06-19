@@ -37,7 +37,6 @@
         <p>
           {{ object.text|truncatewords:30 }}
         </p>
-         <!-- эта кнопка видна только автору -->
         {% if user == object.author %}
         <a class="btn btn-primary" href="{% url 'posts:post_update' object.id %}">
           редактировать запись

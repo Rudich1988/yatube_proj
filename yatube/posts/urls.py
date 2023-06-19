@@ -1,7 +1,7 @@
 from django.urls import path
 from posts.views import (IndexListView, PostCreateView, PostDeleteView,
                          PostDetailView, PostListView, PostUpdateView,
-                         ProfileListView)
+                         ProfileListView, PostSearchView)
 
 app_name = 'posts'
 
@@ -14,4 +14,5 @@ urlpatterns = [
     path('post_update/<int:pk>/', PostUpdateView.as_view(), name='post_update'),
     path('profile/<int:pk>', ProfileListView.as_view(), name='profile'),
     path('post_delete/<int:pk>', PostDeleteView.as_view(), name='post_delete'),
+    path('posts_search/', PostSearchView.as_view(), name='posts_search'),
 ]
