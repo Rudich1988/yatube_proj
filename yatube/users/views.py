@@ -1,4 +1,5 @@
-from datetime import datetime as dt
+#from datetime import datetime as dt
+#from typing import Any, Dict
 
 from common.views import TitleMixin
 from django.conf import settings
@@ -7,7 +8,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import (LoginView, PasswordChangeView,
                                        PasswordResetConfirmView,
                                        PasswordResetView)
-from django.contrib.messages.views import SuccessMessageMixin
+#from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
@@ -74,7 +75,7 @@ class UserLoginView(TitleMixin, LoginView):
 
     def get_success_url(self):
         return reverse_lazy('posts:index')
-    
+
 
 def logoutview(request):
     logout(request)

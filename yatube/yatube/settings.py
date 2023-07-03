@@ -37,6 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.facebook',
 
     'about.apps.AboutConfig',
     'posts.apps.PostsConfig',
@@ -130,7 +137,6 @@ USE_L10N = True
 
 #USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -140,16 +146,51 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 AUTH_USER_MODEL = 'users.User'
 
-
-
 DOMAIN_NAME = 'http://127.0.0.1:8000'
 
-
-#EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.yandex.com'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'vtoroi-store@yandex.ru'
 EMAIL_HOST_PASSWORD = 'morozki1988'
-#EMAIL_HOST_USER = 'yatube.project@yandex.ru'
-#EMAIL_HOST_PASSWORD = 'yatube_password'
+#EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+#OAuth
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+
+#facebook
+#SOCIAL_AUTH_FACEBOOK_KEY = '874862217690638'  # App ID
+#SOCIAL_AUTH_FACEBOOK_SECRET ='e2b804b67c39bc3f7a228d63e956fc00' #app key
+
+
+
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'github': {
+        'SCOPE': [
+            'user',
+        ],
+    }
+}
+
+
+
+
+# попытка отправки эл почты
+
+
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+
+
+DEFAULT_FROM_EMAIL = 'vtoroi-store@yandex.ru'
+EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'

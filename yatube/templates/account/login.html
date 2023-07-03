@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load socialaccount %}
+
+
+{% block content %}
+<div class="container py-5"> 
+  <div class="row justify-content-center">
+    <div class="col-md-8 p-5">
+      <div class="card">
+        <div class="card-header">
+          Войти на сайт
+        </div>
+        <div class="card-body">
+          
+          <div class="offset-md-4">
+          <a class="navbar-brand" href="{% provider_login_url 'github' %}">
+            <img src="{% static 'img/Github.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">                 
+            <span style="color:black">Git</span>hub
+          </a>
+
+          <!--<a class="navbar-brand" href="#">
+            <img src="{% static 'img/facebook.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">                 
+            <span style="color:black">Face</span>book
+          </a>-->
+          </div>
+
+        </div> 
+      </div> 
+    </div>
+  </div>
+</div>
+{% endblock %}
